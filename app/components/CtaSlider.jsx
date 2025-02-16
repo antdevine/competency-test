@@ -51,7 +51,7 @@ export default function CtaSlider({ collections }) {
             <Slide key={item.node.id} className="absolute">
                 <div className="bg-cover bg-center w-full h-full before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-600 before:to-transparent" style={{ backgroundImage: `url(${item.node.image.url})` }}>
                     <div className="z-2 text-white text-4xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <h2>{ item.node.title }</h2>
+                    <h2 className="mb-4">{ item.node.title }</h2>
                     <p className="text-base md:text-lg leading-tight md:leading-normal">{ item.node.description }</p>
                     </div>
                     
