@@ -20,7 +20,7 @@ function MockShopProducts() {
   console.log(products, 'products')
 
   return (
-    <div className="grid grid-col-12 lg:grid-cols-3 gap-8 m-8">
+    <div className="grid grid-col-12 md:grid-cols-2 lg:grid-cols-3 gap-8 m-8">
       {loading ? (
         <i className="fas fa-spinner fa-spin text-4xl"></i>
       ) : products?.length > 0 ? (

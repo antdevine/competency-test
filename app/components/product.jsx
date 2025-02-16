@@ -1,35 +1,27 @@
-import { useState } from "react";
 import Image from "next/image";
 
 export default function Product ({item}) {
-    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
-        <div>
+        <div className="relative group cursor-default">
             {item.node.featuredImage && (
                     <Image
                       src={item.node.featuredImage.url}
                       alt={item.node.title}
                       width={150}
                       height={150}
-                      className="w-full h-auto"
+                      className="w-full h-auto md:opacity-100 md:group-hover:opacity-50 md:transition-opacity duration-300"
                     />
                   )}
                   <div className="flex justify-between border-b pt-6 pb-2 mb-6">
-                    <h5 class="uppercase">{item.node.title}</h5>
+                    <h5 className="uppercase">{item.node.title}</h5>
                     <p>
                       {item.node.variants.edges[0]?.node.price.amount}{" "}
                       {item.node.variants.edges[0]?.node.price.currencyCode}
                     </p>
                   </div>
-                  <button
-                    className="px-4 py-2 bg-blue-500 text-white rounded"
-                    onClick={() => setIsOpen(!isOpen)}
-                  >
-                    Find out more
-                  </button>
-                  <div className={`overflow-hidden transition-all duration-500 ${isOpen ? 'h-full' : 'h-0'}`}>
+                  <div className="relative md:absolute md:bg-white md:top-50 z-2 md:p-4 md:m-4 md:top-1/2 md:transform md:-translate-y-1/2 md:opacity-0 md:group-hover:opacity-100 md:transition-opacity duration-300">
                   <p>{item.node.description}</p>
                   </div>
 
