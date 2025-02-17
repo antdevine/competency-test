@@ -3,12 +3,15 @@
 import { useEffect, useState } from "react";
 import Product from "./components/Product";
 import CtaSlider from "./components/CtaSlider";
+import Filters from "./components/Filters";
 
 function MockShopProducts() {
   const [products, setProducts] = useState(null);
   const [collections, setCollections] = useState(null);
   const [productsLoading, setProductsLoading] = useState(true);
   const [collectionsLoading, setCollectionsLoading] = useState(true);
+  const [sortDirection, setSortDirection] = useState("ascending");
+  const [sortedProducts, setSortedProducts] = useState([]);
 
   useEffect(() => {
     fetch("https://mock.shop/api?query={products(first:%2020){edges%20{node%20{id%20title%20description%20featuredImage%20{id%20url}%20variants(first:%203){edges%20{node%20{price%20{amount%20currencyCode}}}}}}}}")
@@ -30,30 +33,51 @@ function MockShopProducts() {
       .catch((error) => console.error(error));
   }, []);
 
+  useEffect(() => {
+    if (products?.length > 0) {
+      let sortedData = products.slice().sort((a, b) =>
+        sortDirection === "ascending"
+          ? a.node.title.localeCompare(b.node.title)
+          : b.node.title.localeCompare(a.node.title)
+      );
+      setSortedProducts(sortedData);
+    }
+  }, [sortDirection, products]);
+
+  const handleSortDirectionChange = (filterValue) => {
+    setSortDirection(filterValue);
+  };
+
   return (
     <>
-    <div>
-    {collectionsLoading ? (
-        <i className="fas fa-spinner fa-spin text-4xl"></i>
-      ) : collections?.length > 0 ? (
-        <CtaSlider collections={collections} />
+      {collectionsLoading || productsLoading ? (
+        <div className="flex justify-center items-center h-screen">
+          <i className="fas fa-spinner fa-spin text-4xl text-blue-500"></i>
+        </div>
       ) : (
-        <p>No collections available</p>
-      )}
-      </div>
+        <>
+          {collections?.length > 0 ? (
+            <CtaSlider collections={collections} />
+          ) : (
+            <p>No collections available</p>
+          )}
 
+          <Filters onSortDirectionChange={handleSortDirectionChange} />
 
-    <div className="grid grid-col-12 md:grid-cols-2 lg:grid-cols-3 gap-8 m-8">
-      {productsLoading ? (
-        <i className="fas fa-spinner fa-spin text-4xl"></i>
-      ) : products?.length > 0 ? (
-        products.map((item) => <Product key={item.node.id} item={item} />)
-      ) : (
-        <p>No products available</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 m-8">
+            {sortedProducts?.length > 0 ? (
+              sortedProducts.map((item) => (
+                <Product key={item.node.id} item={item} />
+              ))
+            ) : (
+              <p>No products available</p>
+            )}
+          </div>
+        </>
       )}
-    </div>
     </>
-  );
+);
+
 }
 
 export default MockShopProducts;

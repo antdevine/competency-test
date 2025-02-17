@@ -12,6 +12,8 @@ export default function Product ({item}) {
                       width={150}
                       height={150}
                       className="w-full h-auto md:opacity-100 md:group-hover:opacity-50 md:transition-opacity duration-300"
+                      priority
+                      unoptimized
                     />
                   )}
                   <div className="flex justify-between border-b pt-6 pb-2 mb-6">
