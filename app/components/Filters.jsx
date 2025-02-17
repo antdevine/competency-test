@@ -32,7 +32,7 @@ export default function Filters({ onSortDirectionChange, defaultSortDirection = 
                     <label className="flex items-center space-x-2">
                         <input type="radio" name="sort" value="ascending" checked={sortDirection === "ascending"}
                 onChange={(e) => setSortDirection(e.target.value)} className="w-4 h-4" />
-                        <span>Ascending</span>
+                        <span>Price Ascending</span>
                     </label>
                     </div>
 
@@ -40,7 +40,7 @@ export default function Filters({ onSortDirectionChange, defaultSortDirection = 
                     <label className="flex items-center space-x-2">
                         <input type="radio" name="sort" value="descending" checked={sortDirection === "descending"}
                 onChange={(e) => setSortDirection(e.target.value)} className="w-4 h-4" />
-                        <span>Descending</span>
+                        <span>Price Descending</span>
                     </label>
                     </div>
 

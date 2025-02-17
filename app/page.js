@@ -37,9 +37,12 @@ function MockShopProducts() {
     if (products?.length > 0) {
       let sortedData = products.slice().sort((a, b) =>
         sortDirection === "ascending"
-          ? a.node.title.localeCompare(b.node.title)
-          : b.node.title.localeCompare(a.node.title)
+          ? parseFloat(a.node.variants.edges[0]?.node.price.amount) -
+            parseFloat(b.node.variants.edges[0]?.node.price.amount)
+          : parseFloat(b.node.variants.edges[0]?.node.price.amount) -
+            parseFloat(a.node.variants.edges[0]?.node.price.amount)
       );
+      
       setSortedProducts(sortedData);
     }
   }, [sortDirection, products]);
